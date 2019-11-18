@@ -1,4 +1,4 @@
-# WhatTheFood
+# WhatTheFood (Android)
 
 For testing purpose, the model has been trained with dataset consist of 
 - helmet 
