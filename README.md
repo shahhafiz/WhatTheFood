@@ -8,4 +8,4 @@ For testing purpose, the model has been trained with dataset consist of
 
 (10 images each)
 
-The result may not accurate since the size of dataset is extremely small.
+The result may not accurate since the size of dataset is extremely small..
