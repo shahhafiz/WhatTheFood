@@ -1,4 +1,5 @@
-helmet
-kasut
-mouse
-stress_ball
+apple
+banana
+mangosteen
+orange
+salak
