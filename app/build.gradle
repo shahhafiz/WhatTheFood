@@ -5,8 +5,10 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "fsktm.edu.whatthefood"
-        minSdkVersion 16 // com.google.firebase:firebase-ml-vision-automl:18.0.2 only compatible with 16
+        minSdkVersion 16
+        // com.google.firebase:firebase-ml-vision-automl:18.0.2 only compatible with 16
         targetSdkVersion 28
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -37,6 +39,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.1.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
 
+    implementation 'com.google.firebase:firebase-core:17.2.1'
+    implementation 'com.google.firebase:firebase-firestore:21.3.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -45,5 +50,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-vision-automl:18.0.2'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+
+    implementation 'com.android.support:multidex:1.0.3'
+
+    //recyclerview
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+
 }
 apply plugin: 'com.google.gms.google-services'
