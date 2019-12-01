@@ -1,6 +1,7 @@
-package fsktm.edu.whatthefood.ui.Library;
+package fsktm.edu.whatthefood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import fsktm.edu.whatthefood.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "RecyclerViewAdapter";
@@ -58,7 +56,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
      holder.parentLayout.setOnClickListener(new View.OnClickListener(){
          public void onClick(View view){
-             Toast.makeText(mContext, item.getName(),Toast.LENGTH_SHORT).show();
+             Intent i = new Intent(mContext, NutritionDetails.class);
+             i.putExtra("Name",item.getName());
+             mContext.startActivity(i);
+
+
          }
      });
      

@@ -1,4 +1,4 @@
-package fsktm.edu.whatthefood.ui.Library;
+package fsktm.edu.whatthefood;
 
 import android.util.Log;
 

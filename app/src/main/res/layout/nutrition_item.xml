@@ -34,8 +34,7 @@
         android:layout_toRightOf="@id/calTag"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:text="Calories"
-        android:textColor="#000000" />
+        android:text="Calories" />
 
     <TextView
         android:layout_width="wrap_content"
