@@ -1,5 +1,6 @@
 package fsktm.edu.whatthefood.ui.Camera;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 import java.util.List;
 import fsktm.edu.whatthefood.Labeler;
+import fsktm.edu.whatthefood.NutritionDetails;
 import fsktm.edu.whatthefood.R;
 
 import static android.app.Activity.RESULT_OK;
@@ -35,6 +38,7 @@ public class CameraFragment extends Fragment {
     private ImageView image;
     TextView tvLabel;
     TextView tvConfidence;
+    Button detailsBtn;
 
     @Override
 
@@ -76,10 +80,21 @@ public class CameraFragment extends Fragment {
                                 float confidence = label.getConfidence();
 
 
+
                                 tvLabel.setText(text);
                                 tvConfidence.setText(String.valueOf(confidence));
 
+                                detailsBtn =  (Button)getView().findViewById(R.id.detailsBtn);
+                                detailsBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        NutritionDetails(text.substring(0, 1).toUpperCase() + text.substring(1));
+                                    }
+                                });
+
+
                                 System.out.println(text);
+
                             }
                         }
                     })
@@ -91,5 +106,12 @@ public class CameraFragment extends Fragment {
                         }
                     });
         }
+    }
+
+
+    public void NutritionDetails(String text){
+        Intent i = new Intent(getContext(), NutritionDetails.class);
+        i.putExtra("Name",text);
+        startActivity(i);
     }
 }
