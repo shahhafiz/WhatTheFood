@@ -1,5 +1,5 @@
 apple
-banana
-mangosteen
 orange
+banana
 salak
+mangosteen
