@@ -14,8 +14,8 @@ public class Labeler {
 
         try {
             FirebaseVisionOnDeviceAutoMLImageLabelerOptions options = new FirebaseVisionOnDeviceAutoMLImageLabelerOptions.Builder(localModel)
-                    .setConfidenceThreshold(0.0f)  // Evaluate your model in the Firebase console
-                    // to determine an appropriate value.
+                    .setConfidenceThreshold(0.5f)  // Evaluate your model in the Firebase console
+                                                    // to determine an appropriate value.
                     .build();
 
             return FirebaseVision.getInstance().getOnDeviceAutoMLImageLabeler(options);
