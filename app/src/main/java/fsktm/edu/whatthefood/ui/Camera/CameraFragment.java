@@ -1,6 +1,5 @@
 package fsktm.edu.whatthefood.ui.Camera;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -20,10 +19,9 @@ import androidx.lifecycle.ViewModelProviders;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
-import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
+
 import java.util.List;
 import fsktm.edu.whatthefood.Labeler;
 import fsktm.edu.whatthefood.NutritionDetails;
@@ -84,7 +82,7 @@ public class CameraFragment extends Fragment {
                                 tvLabel.setText(text);
                                 tvConfidence.setText(String.valueOf(confidence));
 
-                                detailsBtn =  (Button)getView().findViewById(R.id.detailsBtn);
+                                detailsBtn =  getView().findViewById(R.id.detailsBtn);
                                 detailsBtn.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

@@ -3,10 +3,9 @@ package fsktm.edu.whatthefood.ui.Import;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +20,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.label.FirebaseVisionImageLabel;
 import com.google.firebase.ml.vision.label.FirebaseVisionImageLabeler;
 
-import fsktm.edu.whatthefood.MainActivity;
+import java.io.IOException;
+import java.util.List;
+
+import fsktm.edu.whatthefood.Labeler;
+import fsktm.edu.whatthefood.NutritionDetails;
 import fsktm.edu.whatthefood.R;
 
 import static android.app.Activity.RESULT_OK;
@@ -39,6 +46,7 @@ public class ImportFragment extends Fragment {
     private static final int PERMISSION_CODE = 101;
     TextView tvLabel;
     TextView tvConfidence;
+    Button detailsBtn;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -48,8 +56,15 @@ public class ImportFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_import, container, false);
 
 
-        imageView = root.findViewById(R.id.imageView);
+
         //btn_gallery = root.findViewById(R.id.btn_gallery);
+
+        Labeler labelerObj = new Labeler();
+        labeler = labelerObj.getLabeler();
+
+        tvLabel = root.findViewById(R.id.label);
+        tvConfidence = root.findViewById(R.id.confident);
+        imageView = root.findViewById(R.id.imageView);
 
    
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -98,13 +113,65 @@ public class ImportFragment extends Fragment {
     //handle result of picked image
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE){
+
             //set image to image view
             imageView.setImageURI(data.getData());
 
+            FirebaseVisionImage image = null;
+            try {
+                image = FirebaseVisionImage.fromFilePath(getContext(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            labeler.processImage(image)
+                    .addOnSuccessListener(new OnSuccessListener<List<FirebaseVisionImageLabel>>() {
+                        @Override
+                        public void onSuccess(List<FirebaseVisionImageLabel> labels) {
+                            // Task completed successfully
+                            // ...
+                            for (FirebaseVisionImageLabel label : labels) {
+                                String text = label.getText();
+                                float confidence = label.getConfidence();
+
+
+
+                                tvLabel.setText(text);
+                                tvConfidence.setText(String.valueOf(confidence));
+
+                                detailsBtn =  getView().findViewById(R.id.btnNutDet);
+                                detailsBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        NutritionDetails(text.substring(0, 1).toUpperCase() + text.substring(1));
+                                    }
+                                });
+
+
+                                System.out.println(text);
+
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Task failed with an exception
+                            // ...
+                        }
+                    });
 
 
 
         }
+    }
+
+    public void NutritionDetails(String text){
+        Intent i = new Intent(getContext(), NutritionDetails.class);
+        i.putExtra("Name",text);
+        startActivity(i);
     }
 }
