@@ -6,3 +6,4 @@ Training Dataset:
 3. Salak (100 images)
 4. Mangosteen (100 images)
 5. Banana (100 images)
+6. 
