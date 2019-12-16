@@ -80,7 +80,7 @@ public class CameraFragment extends Fragment {
 
 
                                 tvLabel.setText(text);
-                                tvConfidence.setText(String.valueOf(confidence));
+                                tvConfidence.setText(String.valueOf((int)(confidence*100))+"%");
 
                                 detailsBtn =  getView().findViewById(R.id.detailsBtn);
                                 detailsBtn.setOnClickListener(new View.OnClickListener() {

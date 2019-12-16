@@ -57,17 +57,19 @@ public class ImportFragment extends Fragment {
 
 
 
-        //btn_gallery = root.findViewById(R.id.btn_gallery);
+
 
         Labeler labelerObj = new Labeler();
         labeler = labelerObj.getLabeler();
-
+    //initialiaze views
         tvLabel = root.findViewById(R.id.label);
         tvConfidence = root.findViewById(R.id.confident);
         imageView = root.findViewById(R.id.imageView);
 
-   
+   //check permission run time
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    //to check if the activity has permission  to access gallery
+                    //activitycompat is used because fragment
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
                         //permission not granted, request it.
                         String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
@@ -94,6 +96,7 @@ public class ImportFragment extends Fragment {
         startActivityForResult(gallery, PICK_IMAGE);
     }
     //handle result of runtime permission
+    //this method override in activity to detect when user has accepted the permission
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -140,7 +143,7 @@ public class ImportFragment extends Fragment {
 
 
                                 tvLabel.setText(text);
-                                tvConfidence.setText(String.valueOf(confidence));
+                                tvConfidence.setText(String.valueOf((int)(confidence*100))+"%");
 
                                 detailsBtn =  getView().findViewById(R.id.btnNutDet);
                                 detailsBtn.setOnClickListener(new View.OnClickListener() {
